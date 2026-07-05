@@ -1,0 +1,112 @@
+{
+  "patients": [],
+  "appointments": [
+    {
+      "token": "A1783233797687",
+      "patientName": "34",
+      "age": 23,
+      "gender": "Male",
+      "department": "General Medicine",
+      "doctor": "Dr Priya",
+      "appointmentTime": "10:30",
+      "priority": "Urgent",
+      "criticalScore": 70,
+      "queueNumber": 4,
+      "estimatedWaitingTime": "60 Minutes",
+      "bookedAt": "2026-07-05T06:43:17.687Z"
+    },
+    {
+      "token": "A1783238744861",
+      "patientName": "karthik",
+      "age": 67,
+      "gender": "Male",
+      "department": "General Medicine",
+      "doctor": "Dr Priya",
+      "appointmentTime": "11:00",
+      "priority": "Urgent",
+      "criticalScore": 65,
+      "queueNumber": 5,
+      "estimatedWaitingTime": "75 Minutes",
+      "bookedAt": "2026-07-05T08:05:44.861Z"
+    },
+    {
+      "token": "A1783238901633",
+      "patientName": "hari",
+      "age": 20,
+      "gender": "Male",
+      "department": "General Medicine",
+      "doctor": "Dr Priya",
+      "appointmentTime": "09:00",
+      "priority": "Medium",
+      "criticalScore": 60,
+      "queueNumber": 6,
+      "estimatedWaitingTime": "90 Minutes",
+      "bookedAt": "2026-07-05T08:08:21.633Z"
+    }
+  ],
+  "doctors": [
+    {
+      "id": 1,
+      "name": "Dr Raj",
+      "department": "Cardiology",
+      "availableSlots": [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00"
+      ],
+      "currentPatients": 2
+    },
+    {
+      "id": 2,
+      "name": "Dr Arun",
+      "department": "Pulmonology",
+      "availableSlots": [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00"
+      ],
+      "currentPatients": 1
+    },
+    {
+      "id": 3,
+      "name": "Dr Priya",
+      "department": "General Medicine",
+      "availableSlots": [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00"
+      ],
+      "currentPatients": 6
+    },
+    {
+      "id": 4,
+      "name": "Dr Kumar",
+      "department": "Neurology",
+      "availableSlots": [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30"
+      ],
+      "currentPatients": 2
+    },
+    {
+      "id": 5,
+      "name": "Dr Meena",
+      "department": "Orthopedics",
+      "availableSlots": [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30"
+      ],
+      "currentPatients": 1
+    }
+  ]
+}

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Agentic AI Hospital Appointment Scheduling</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- ==========================
+            HEADER
+    =========================== -->
+
+    <header class="topbar">
+
+        <div class="logo">
+
+            <h1>
+                Agentic AI Hospital
+            </h1>
+
+            <p>
+                Intelligent Appointment Scheduling System
+            </p>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================
+            DASHBOARD
+    =========================== -->
+
+    <section class="dashboard">
+
+        <div class="dashboard-card">
+
+            <h3>Total Patients</h3>
+
+            <h2 id="totalPatients">
+                0
+            </h2>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Emergency Cases</h3>
+
+            <h2 id="emergencyCount">
+                0
+            </h2>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Appointments Today</h3>
+
+            <h2 id="appointmentCount">
+                0
+            </h2>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>Doctors Available</h3>
+
+            <h2 id="doctorCount">
+                12
+            </h2>
+
+        </div>
+
+    </section>
+
+
+
+    <div class="container">
+
+
+
+        <!-- ==========================
+                PATIENT FORM
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Patient Registration</h2>
+
+            <div class="row">
+
+                <div class="input-group">
+
+                    <label>
+                        Patient Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="patientName"
+                        placeholder="Enter patient name">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        placeholder="Age">
+
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="input-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select id="gender">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option>
+                            Male
+                        </option>
+
+                        <option>
+                            Female
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="Mobile Number">
+
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="input-group">
+
+                    <label>
+                        Existing Disease
+                    </label>
+
+                    <select id="history">
+
+                        <option>
+                            None
+                        </option>
+
+                        <option>
+                            Diabetes
+                        </option>
+
+                        <option>
+                            Hypertension
+                        </option>
+
+                        <option>
+                            Heart Disease
+                        </option>
+
+                        <option>
+                            Asthma
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Symptom Duration
+                    </label>
+
+                    <select id="duration">
+
+                        <option>
+                            Less than 1 Hour
+                        </option>
+
+                        <option>
+                            1-6 Hours
+                        </option>
+
+                        <option>
+                            1 Day
+                        </option>
+
+                        <option>
+                            More than 2 Days
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <label>
+
+                Describe Symptoms
+
+            </label>
+
+            <textarea
+
+                id="symptoms"
+
+                rows="6"
+
+                placeholder="Example:
+Chest pain for two hours.
+Difficulty breathing.
+High fever.
+Severe headache.
+Vomiting.
+Dizziness.">
+
+            </textarea>
+
+
+
+            <div class="button-group">
+
+                <button
+                    id="analyzeButton">
+
+                    Analyze Symptoms
+
+                </button>
+
+                <button
+                    id="clearButton">
+
+                    Clear Form
+
+                </button>
+
+            </div>
+
+        </section>
+                <!-- ==========================
+                AI ANALYSIS PANEL
+        =========================== -->
+
+        <section class="card">
+
+            <h2>AI Patient Analysis</h2>
+
+            <div class="analysis-grid">
+
+                <div class="analysis-card">
+
+                    <h3>Detected Disease</h3>
+
+                    <p id="detectedDisease">
+                        Waiting for Analysis
+                    </p>
+
+                </div>
+
+                <div class="analysis-card">
+
+                    <h3>Critical Score</h3>
+
+                    <h1 id="criticalScore">
+                        0
+                    </h1>
+
+                </div>
+
+                <div class="analysis-card">
+
+                    <h3>Priority Level</h3>
+
+                    <p id="priorityLevel">
+                        Low
+                    </p>
+
+                </div>
+
+                <div class="analysis-card">
+
+                    <h3>Department</h3>
+
+                    <p id="department">
+                        Not Assigned
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                AI RECOMMENDATION
+        =========================== -->
+
+        <section class="card">
+
+            <h2>AI Recommendation</h2>
+
+            <div
+                id="aiRecommendation"
+                class="recommendation-box">
+
+                AI recommendation will appear here after symptom analysis.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                EMERGENCY ALERT
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Emergency Status</h2>
+
+            <div
+                id="emergencyStatus"
+                class="status-box">
+
+                No Emergency Cases
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                APPOINTMENT SCHEDULER
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Appointment Scheduler</h2>
+
+            <div class="row">
+
+                <div class="input-group">
+
+                    <label>
+
+                        Suggested Doctor
+
+                    </label>
+
+                    <select id="doctorSelect">
+
+                        <option value="">
+                            Select Doctor
+                        </option>
+
+                        <option>
+                            Dr. Raj - Cardiology
+                        </option>
+
+                        <option>
+                            Dr. Priya - General Medicine
+                        </option>
+
+                        <option>
+                            Dr. Kumar - Neurology
+                        </option>
+
+                        <option>
+                            Dr. Meena - Orthopedics
+                        </option>
+
+                        <option>
+                            Dr. Arun - Pulmonology
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+
+                        Appointment Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        id="appointmentDate">
+
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="input-group">
+
+                    <label>
+
+                        Available Time Slot
+
+                    </label>
+
+                    <select id="appointmentTime">
+
+                        <option>
+                            09:00 AM
+                        </option>
+
+                        <option>
+                            09:30 AM
+                        </option>
+
+                        <option>
+                            10:00 AM
+                        </option>
+
+                        <option>
+                            10:30 AM
+                        </option>
+
+                        <option>
+                            11:00 AM
+                        </option>
+
+                        <option>
+                            11:30 AM
+                        </option>
+
+                        <option>
+                            02:00 PM
+                        </option>
+
+                        <option>
+                            02:30 PM
+                        </option>
+
+                        <option>
+                            03:00 PM
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+
+                        Estimated Waiting Time
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="waitingTime"
+                        value="--"
+                        readonly>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="button-group">
+
+                <button id="scheduleButton">
+
+                    Generate Appointment
+
+                </button>
+
+                <button id="confirmButton">
+
+                    Confirm Appointment
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                APPOINTMENT DETAILS
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Appointment Details</h2>
+
+            <table class="appointment-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Token</th>
+
+                        <th>Patient</th>
+
+                        <th>Doctor</th>
+
+                        <th>Department</th>
+
+                        <th>Date</th>
+
+                        <th>Time</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="appointmentBody">
+
+                </tbody>
+
+            </table>
+
+        </section>
+                <!-- ==========================
+                DOCTOR AVAILABILITY
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Doctor Availability</h2>
+
+            <table class="doctor-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Patients Today</th>
+                        <th>Available Slots</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="doctorTable">
+
+                    <tr>
+
+                        <td>Dr. Raj</td>
+                        <td>Cardiology</td>
+                        <td>12</td>
+                        <td>4</td>
+                        <td>Available</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Dr. Priya</td>
+                        <td>General Medicine</td>
+                        <td>18</td>
+                        <td>2</td>
+                        <td>Busy</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Dr. Kumar</td>
+                        <td>Neurology</td>
+                        <td>8</td>
+                        <td>7</td>
+                        <td>Available</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Dr. Meena</td>
+                        <td>Orthopedics</td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td>Available</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+        <!-- ==========================
+                PATIENT PRIORITY QUEUE
+        =========================== -->
+
+        <section class="card">
+
+            <h2>Priority Queue</h2>
+
+            <table class="queue-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Rank</th>
+                        <th>Patient</th>
+                        <th>Critical Score</th>
+                        <th>Priority</th>
+                        <th>Department</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="priorityQueue">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+        <!-- ==========================
+                EMERGENCY QUEUE
+        =========================== -->
+
+        <section class="card emergency-card">
+
+            <h2>Emergency Queue</h2>
+
+            <div id="emergencyQueue">
+
+                No emergency patients.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                HOSPITAL STATISTICS
+        =========================== -->
+
+        <section class="statistics">
+
+            <div class="stat-card">
+
+                <h3>Critical</h3>
+
+                <h1 id="criticalPatients">
+
+                    0
+
+                </h1>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>High Priority</h3>
+
+                <h1 id="highPatients">
+
+                    0
+
+                </h1>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>Medium Priority</h3>
+
+                <h1 id="mediumPatients">
+
+                    0
+
+                </h1>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>Low Priority</h3>
+
+                <h1 id="lowPatients">
+
+                    0
+
+                </h1>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                CHARTS
+        =========================== -->
+
+        <section class="chart-grid">
+
+            <div class="chart-card">
+
+                <h2>Priority Distribution</h2>
+
+                <canvas id="priorityChart">
+
+                </canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <h2>Doctor Workload</h2>
+
+                <canvas id="doctorChart">
+
+                </canvas>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================
+                AI ACTIVITY LOG
+        =========================== -->
+
+        <section class="card">
+
+            <h2>AI Activity Log</h2>
+
+            <div id="activityLog" class="log-box">
+
+                <p>Waiting for patient analysis...</p>
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+
+
+
+    <footer>
+
+        <p>
+
+            Agentic AI Hospital Appointment Scheduling System
+
+        </p>
+
+    </footer>
+
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
