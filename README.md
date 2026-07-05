@@ -1,5 +1,9 @@
 # Agentic AI Hospital — Appointment Scheduling System
 
+## 🚀 Live Demo
+
+👉 **[Go Live](https://agentic-ai-hospital.onrender.com/)**
+
 ## What was wrong with the original project
 
 1. `server.js` required `./routes/aiRoutes`, but that file (and the whole `routes/` folder)
