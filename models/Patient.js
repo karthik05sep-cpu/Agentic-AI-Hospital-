@@ -14,5 +14,4 @@ router.post("/analyze", analyzePatient);
 
 // GET /api/dashboard  -> full dashboard snapshot (patients, doctors, appointments, stats)
 router.get("/dashboard", getDashboard);
-
-module.exports = router;
+module.exports = { analyzePatient, getDashboard };
