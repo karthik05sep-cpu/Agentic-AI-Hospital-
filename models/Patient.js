@@ -1,17 +1,47 @@
-// =======================================================
-// AI Routes
-// This file was required by server.js in the original
-// project but did not exist anywhere in the uploaded code,
-// which meant the server could not start.
-// =======================================================
+const { db } = require("../database");
 
-const express = require("express");
-const router = express.Router();
-const { analyzePatient, getDashboard } = require("../controllers/aiController");
+function rowToPatient(row) {
+    if (!row) return null;
+    return {
+        id: row.id,
+        name: row.name,
+        age: row.age,
+        gender: row.gender,
+        phone: row.phone,
+        history: row.history ? JSON.parse(row.history) : null,
+        symptoms: row.symptoms ? JSON.parse(row.symptoms) : null,
+        createdAt: row.created_at
+    };
+}
 
-// POST /api/analyze  -> analyze symptoms, register patient, book appointment
-router.post("/analyze", analyzePatient);
+function createPatient({ name, age, gender, phone, history, symptoms }) {
+    const insert = db.prepare(`
+        INSERT INTO patients (name, age, gender, phone, history, symptoms)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `);
+    const result = insert.run(
+        name,
+        age,
+        gender,
+        phone || null,
+        JSON.stringify(history || []),
+        JSON.stringify(symptoms || [])
+    );
+    return getPatientById(result.lastInsertRowid);
+}
 
-// GET /api/dashboard  -> full dashboard snapshot (patients, doctors, appointments, stats)
-router.get("/dashboard", getDashboard);
-module.exports = { analyzePatient, getDashboard };
+function getPatientById(id) {
+    const row = db.prepare("SELECT * FROM patients WHERE id = ?").get(id);
+    return rowToPatient(row);
+}
+
+function getAllPatients() {
+    const rows = db.prepare("SELECT * FROM patients ORDER BY id ASC").all();
+    return rows.map(rowToPatient);
+}
+
+module.exports = {
+    createPatient,
+    getPatientById,
+    getAllPatients
+};
