@@ -11,15 +11,16 @@
 //   - doctors       -> hospital doctor roster + availability
 //   - appointments  -> every appointment booked, linked to a patient + doctor
 // =======================================================
-
 const path = require("path");
-const { DatabaseSync } = require("node:sqlite"); // built into Node.js 22+, no install needed
+const Database = require("better-sqlite3");
 
 const DB_PATH = path.join(__dirname, "hospital.db");
 
 // The database connection is created once and reused everywhere.
-const db = new DatabaseSync(DB_PATH);
-db.exec("PRAGMA foreign_keys = ON;");
+const db = new Database(DB_PATH);
+db.pragma("journal_mode = WAL");
+db.pragma("foreign_keys = ON");
+
 
 const DEFAULT_DOCTORS = [
     { name: "Dr Raj", department: "Cardiology", availableSlots: ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM"] },
@@ -78,16 +79,12 @@ function seedDoctorsIfEmpty() {
         "INSERT INTO doctors (name, department, available_slots, current_patients) VALUES (?, ?, ?, 0)"
     );
 
-    db.exec("BEGIN");
-    try {
-        for (const doc of DEFAULT_DOCTORS) {
+    const insertMany = db.transaction((doctors) => {
+        for (const doc of doctors) {
             insert.run(doc.name, doc.department, JSON.stringify(doc.availableSlots));
         }
-        db.exec("COMMIT");
-    } catch (err) {
-        db.exec("ROLLBACK");
-        throw err;
-    }
+    });
+    insertMany(DEFAULT_DOCTORS);
 
     console.log(`Seeded ${DEFAULT_DOCTORS.length} default doctors.`);
 }
